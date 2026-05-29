@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Most_Recent__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field indicates if a report is the most up to date account report generated.</description>
+    <label>Is Most Recent?</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

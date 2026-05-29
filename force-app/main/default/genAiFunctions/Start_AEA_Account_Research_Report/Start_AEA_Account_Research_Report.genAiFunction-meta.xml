@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Enqueues the AEA Research Flow for the given Account Id.</description>
+    <invocationTarget>AEA_Account_Research_Flow_Starter</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+    <masterLabel>Start AEA Account Research Report</masterLabel>
+    <progressIndicatorMessage>Starting Research...</progressIndicatorMessage>
+</GenAiFunction>

@@ -1,0 +1,14 @@
+{
+  "required" : [ "accountIds" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "accountIds" : {
+      "title" : "accountIds",
+      "description" : "Pass the account id to the flow.",
+      "lightning:type" : "lightning__recordIdType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

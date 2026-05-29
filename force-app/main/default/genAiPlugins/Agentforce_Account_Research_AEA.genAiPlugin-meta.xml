@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>This topic is about enabling the agent to perform research on accounts to obtain specific information that will be helpful to a seller. The agent is capable of accessing up-to-date information on recent news, competitive positioning, and other valuable information about an account that will help a seller. This topic also allows the agent to answer questions about the account that come from the account research reports. The overall goal of this topic is to help sellers perform account research tasks that will speed up the selling process and make it more personal.</description>
+    <developerName>Agentforce_Account_Research_AEA</developerName>
+    <genAiFunctions>
+        <functionName>Agentforce_Account_Research_Task</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__GetRecordDetails</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>schema_ai__IdentifyObjectByName</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__IdentifyRecordByName</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__QueryRecords</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__QueryRecordsWithAggregate</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Start_AEA_Account_Research_Report</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>After the &lt;Start_AEA_Account_Research_Report&gt; action has been run you must take the contextual data coming back from the response and alert the User that research has started and they will receive a notification in a few minutes when the research is complete.</description>
+        <developerName>instruction_0_1765326818776</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1765326818776</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>If you do not know which account the user is talking about, ask them for the name of the account.</description>
+        <developerName>instruction_1_1765326818783</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_1_1765326818783</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>###INSTRUCTIONS FOR RETRIEVING CONTEXTUAL INFORMATION ABOUT AN ACCOUNT 
+There are multiple available data retrieval functions at your disposal. You can use each one of them multiple times if needed. You should use functions as many times as necessary until you have all the data required to fulfill the request of the user. You can perform extra calls if you think you can get additional relevant information. Identify the object type (i.e., leads, opportunities, accounts) the user asks about. If unclear, confirm with the user and make a suggestion based on the query context and history. When only the name of a record is mentioned in the user request, you MUST call the IdentifyRecordByName action to get the necessary IDs. Always call QueryRecords &amp; QueryRecordsWithAggregate passing plain natural language english as input. You must Include the record ID in the input if available.</description>
+        <developerName>instruction_5_1765326818783</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_5_1765326818783</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>###INSTRUCTIONS FOR ANSWERING A QUESTION ABOUT THE ACCOUNT RESEARCH REPORT 
+You have the capability to answer questions about Account Research Reports. Use the &lt;Agentforce Account Research Task&gt; action to answer or summarize information the user asks about pertaining to the Account Research Report. Use your data retrieval/search functions to identify the Account ID to pass this information to the &lt;Agentforce Account Research Task&gt; action. Sometimes this will require multiple searches with these actions to find the account ID as the user may not be on the account record page. The inputs necessary for the &lt;Agentforce Account Research Task&gt; action are: - Question or Task: The users question/task that they want answered/performed - Account: Only accepts Account ID Use your search actions to find the name of the Account for the input parameter for the &lt;Agentforce Account Research Task&gt; action.</description>
+        <developerName>instruction_3_1765326818783</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_3_1765326818783</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>###INSTRUCTIONS FOR SUMMARIZING THE ACCOUNT RESEARCH REPORT 
+You have the capability to summarize sections from the Account Research Reports. Use the &lt;Agentforce Account Research Task&gt; action to answer or summarize information the user asks about pertaining to the Account Research Report. Use your data retrieval/search functions to identify the Account ID to pass this information to the &lt;Agentforce Account Research Task&gt; action. Sometimes this will require multiple searches with these actions to find the account ID as the user may not be on the account record page. The inputs necessary for the &lt;Agentforce Account Research Task&gt; action are: - Question or Task: The users question/task that they want answered/performed - Account: Only accepts Account ID</description>
+        <developerName>instruction_4_1765326818783</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_4_1765326818783</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>You must figure out the account ID and pass it to the &lt;Start_AEA_Account_Research_Report&gt;. The &lt;Start_AEA_Account_Research_Report&gt; Agent Action will only work with Account IDs.</description>
+        <developerName>instruction_2_1765326818783</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_2_1765326818783</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Agentforce Account Research AEA</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to perform account research by identifying which account the user would like to research and then passing the Account ID to the &lt;Start_AEA_Account_Research_Report&gt; Agent Action. You can also help answer questions about the research report that was just generated or previous research reports that were created for the account. Additionally, it should avoid retrieving information that is harmful, violent, biased, or harassing.</scope>
+</GenAiPlugin>

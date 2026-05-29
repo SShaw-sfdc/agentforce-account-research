@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This prompt template responds to the user&apos;s specific question or task.</description>
+        <name>Answer_Account_Research_Report_Question_or_Task</name>
+        <label>Answer Account Research Report Question or Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Agentforce_Account_Research_Task</actionName>
+        <actionType>generatePromptResponse</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Input:Question_or_Task</name>
+            <value>
+                <elementReference>Question_or_Task</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Input:Account_Research_Report</name>
+            <value>
+                <elementReference>Get_Most_Recent_Account_Research_Report</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Input:Account</name>
+            <value>
+                <elementReference>Get_Account_Name</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Agentforce_Account_Research_Task</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>Question_or_Task_Output</assignToReference>
+            <name>promptResponse</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This action takes an account ID and question/task about an Agentforce Account Research Report and answers/performs the task.</description>
+    <environments>Default</environments>
+    <interviewLabel>Agentforce Account Research Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Agentforce Account Research Task</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the Account Name for the question/task about an Agentforce Account Research Report</description>
+        <name>Get_Account_Name</name>
+        <label>Get Account Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Most_Recent_Account_Research_Report</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>account_ID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Action that gets the most recent account research report for a given account.</description>
+        <name>Get_Most_Recent_Account_Research_Report</name>
+        <label>Get Most Recent Account Research Report</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Answer_Account_Research_Report_Question_or_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Name.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Is_Most_Recent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account_Research_Report__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_Name</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>This is the account ID to be used for the Agentforce Account Research Report Task.</description>
+        <name>account_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>This is the user&apos;s input question or task they want performed for the given Account Research Report.</description>
+        <name>Question_or_Task</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>This is the output for the requested question or task about the Account Research Report.</description>
+        <name>Question_or_Task_Output</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

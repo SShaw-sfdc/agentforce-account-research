@@ -1,0 +1,1562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_10</activeVersionIdentifier>
+    <description>This prompt template creates the final report for the Account Intelligence Research Report action.</description>
+    <developerName>Account_Intelligence_Research_Report_Generator</developerName>
+    <masterLabel>Account Intelligence Research Report Generator</masterLabel>
+    <templateVersions>
+        <content>### MAIN GOAL  
+You are an expert research analyst at {!$Organization.Name}.  
+Write a **detailed Account Research Report** for **{!$Input:Account.Name}** that equips everyone from quota-carrying AEs to senior executives with the context they need for both long-term **Account Strategy** and near-term **Opportunity Prep**.
+
+---
+
+## 1 Content requirements  
+Your report **must** contain the following sections **in this order**.  
+Follow the guidance for length, style, and structure.
+
+1. **Company Overview**  
+  * *Length:* 2–3 narrative paragraphs (≈250 – 350 words).  
+  * *Include:* headquarters, founding year, core products, recent financials, standout differentiators, and “one-liner” mission.  
+2. **Recent News**  
+  * *Form:* bullet list (•) of the 5–10 most material events ≤ 12 months old.  
+  * *Each bullet:* 1 sentence summary + inline citation.  
+3. **Strategic Positioning &amp; Market Landscape**  
+  * *Paragraph* introducing overall position → numbered or bulleted sub-points covering market share, key competitors, and major trends.  
+  * *Paragraph* with analysis of company competitive positioning → numbered or bulleted sub-points covering the future trends and what this means for the company.
+4. **Company Strategic Priorities**  
+  * 5–10 numbered priorities that the researched account might have from the research. Start each with a bold verb (e.g., **Expand**, **Monetize**, **Streamline**). With each of these 5-10 numbered priorities include a second sentence with your evidence (e.g., **Evidence:** &lt;the bit of information for why you believe that priority is a priority for the company&gt;)
+5. **Technology Stack Insights and Partnerships**  
+  * • 2–3 narrative paragraphs (≈250 – 350 words) with bullets are fine; call out core platform components, AI/agentic capabilities, data stack, and at least 3 strategic tech alliances.  
+6. **Opportunities for {!$Organization.Name}**  
+  * 3–7 bullets written from **{!$Organization.Name}’s** perspective (what we could sell / how we can add value).  
+
+---
+
+## 2 Reusable summary table  
+Insert **exactly one** HTML table **immediately after the Company Overview section**.  
+Populate it with research data; if a datapoint is unknown, leave the cell blank.
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| FY-25 Revenue | | |
+| CEO | | |
+| YoY Revenue Growth | | |
+| HQ Location | | |
+| Key Competitor(s) | | |
+
+---
+
+## 3 Formatting rules  
+
+* Output **pure HTML only** (no leading ```html fences, no trailing ``` fences).  
+* Headings: `&lt;h2&gt;` for section titles, `&lt;h3&gt;` optional for sub-heads.  
+* Regular paragraphs: `&lt;p&gt; … &lt;/p&gt;`  
+* Bullets: `&lt;ul&gt;&lt;li&gt; … &lt;/li&gt;&lt;/ul&gt;`  
+* Table as shown above; keep minimal inline CSS.  
+* **Citations:** the visible text = the publication / site name; wrap it in an `&lt;a&gt;` tag that hyperlinks to the URL **immediately at the end of the sentence or bullet**. Example:  
+ `… posted record revenue &lt;a href=&quot;https://investor.salesforce.com&quot;&gt;Salesforce Investor Relations&lt;/a&gt;.`  
+* If a required research section has **no data**, still include the header followed by:  
+ `&lt;p&gt;&lt;em&gt;No research found for this section.&lt;/em&gt;&lt;/p&gt;`
+
+---
+
+## 4 Source material  
+
+1. **CRM Data Snapshot** – in `{!$RecordSnapshot:Account.Snapshot}`  
+2. **External Research JSON objects**  
+  * Company Overview &amp; Recent News → `{!$Input:Company_Overview}`  
+  * Competitive Positioning &amp; Market Landscape → `{!$Input:Positioning_and_Landscape}`  
+  * Company Strategic Priorities → `{!$Input:Strategic_Priorities}`  
+  * Technology Insights &amp; Partnerships → `{!$Input:Tech_Insights}`  
+
+You may assume each JSON object follows the schema described below (`choices[0].message.content` contains Markdown with headings and citations).
+
+---
+
+## 5 Extraction &amp; synthesis guidelines  
+
+* Parse the **`message.content`** field of each JSON object to mine facts.  
+* De-duplicate overlapping items across sources; prefer the most recent data.  
+* Trim or rewrite raw content so it reads cohesively; avoid first-person references (“I”, “we”) unless in the Opportunities section.  
+* Convert any Markdown lists or headings into the HTML structures defined above.  
+* Ensure every quantitative statement (market share %, revenue, growth) has an inline citation.  
+* Stay within the general GPT-4o context window; token limits are not a concern.
+
+---
+
+## 6 Output  
+
+Return the **complete HTML body** of the report—nothing else.
+
+</content>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_10</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>{!$RecordSnapshot:Account.Snapshot}
+
+{!$Input:Company_Overview}
+
+{!$Input:Positioning_and_Landscape}
+
+{!$Input:Strategic_Priorities}
+
+{!$Input:Tech_Insights}
+</content>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_1</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL 
+You job is to write a detailed account research plan for {!$Input:Account.Name}. You work for {!$Organization.Name} and you are supporting the Account team with research activities. 
+
+###
+
+### Data about the account in the CRM
+
+Here is the information on the account that we currently have in CRM:
+{!$RecordSnapshot:Account.Snapshot}
+###
+
+
+### Description of the JSON Research Objects Below
+
+Here is a description of the research you will find in the JSON objects below:
+
+JSON Response Object Description
+ 
+The JSON object represents a response generated by an AI model. It contains metadata about the response, token usage statistics, cited sources, and the generated content. Here&apos;s a detailed breakdown of each field in the JSON object:
+ 
+Top-Level Keys
+id
+Type: String
+Description: A globally unique identifier for this specific response. It serves as a reference for tracking or auditing the response.
+Example: &quot;b2378da9-bf38-4a92-a341-4c2558363e95&quot;
+model
+Type: String
+Description: The name or identifier of the AI model that generated the response. This value specifies the particular version or type of the model used.
+Example: &quot;sonar-pro&quot;
+created
+Type: Integer (Unix Timestamp)
+Description: The time the response was generated, represented as a Unix timestamp (seconds since January 1, 1970).
+Example: 1748462839 (This value corresponds to a specific date and time.)
+usage
+Type: Object
+Description: Contains metrics detailing token usage and the search context size for this specific request-response interaction.
+Fields:
+prompt_tokens:
+Type: Integer
+Description: Number of tokens used in the input prompt provided to the AI.
+Example: 150
+completion_tokens:
+Type: Integer
+Description: Number of tokens used in the AI-generated response (completion).
+Example: 406
+total_tokens:
+Type: Integer
+Description: Total number of tokens used in the interaction (sum of prompt_tokens and completion_tokens).
+Example: 556
+search_context_size:
+Type: String
+Description: Indicates the size or scope of the search context utilized by the model to generate the response.
+Example: &quot;high&quot;
+citations
+Type: Array of Strings
+Description: A list of URLs representing sources or materials cited in the generated response. These provide attribution or additional reference for the information included in the completion.
+Example:
+
+[  
+ &quot;https://www.salesforce.com/news/&quot;,  
+ &quot;https://www.salesforceben.com/category/news/&quot;,  
+ &quot;https://www.salesforce.com/blog/what-does-salesforce-do/&quot;,  
+ &quot;https://investor.salesforce.com/overview/default.aspx&quot;,  
+ &quot;https://www.the-independent.com/topic/salesforce&quot;  
+]  
+ 
+6. object
+Type: String
+Description: Specifies the type of object being returned by the API. In this case, &quot;chat.completion&quot; indicates that the object contains a conversational completion generated by the AI.
+Example: &quot;chat.completion&quot;
+choices
+Type: Array of Objects
+Description: Contains one or more generated completions (responses) from the AI model. Each element in the array is a possible &quot;choice&quot; of response.
+Fields (per object in the array):
+index:
+Type: Integer
+Description: The index or position of the choice in the array. This allows multiple responses to be differentiated if more than one choice is returned.
+Example: 0
+finish_reason:
+Type: String
+Description: Indicates why the response generation process ended. For example, &quot;stop&quot; means the response completed naturally.
+Example: &quot;stop&quot;
+message:
+Type: Object
+Description: Contains the main content of the generated response and metadata about the speaker.
+Fields:
+role:
+Type: String
+Description: The role of the speaker in the conversation. In this case, &quot;assistant&quot; indicates that the response was generated by the AI assistant.
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The text content of the generated response. This is the main body of the message and provides the AI&apos;s answer or explanation.
+Example: &quot;Salesforce is the #1 AI CRM (Customer Relationship Management) platform that helps businesses use artificial intelligence and data to improve their customer connections...&quot;
+delta:
+Type: Object
+Description: Used for streaming responses to provide incremental updates to the generated content. In this example, it is empty, indicating no incremental updates were provided.
+Fields:
+role:
+Type: String
+Description: The role of the speaker for the incremental update (if applicable).
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The incremental content update (empty in this example).
+Example: &quot;&quot;
+
+ 
+Summary Table
+ 
+Structured Data
+: The JSON object is highly structured, making it easy to parse and process.
+Citations: The inclusion of cited sources ensures transparency and credibility.
+Token Usage: Detailed token usage statistics are provided, which are useful for billing or optimization.
+Message Content: The core of the response is in the choices array, specifically in the message.content field.
+
+###
+
+### Detailed Research from External Sources on the Account
+
+Here is all of the research you can use to write your research report
+
+Company Overview and Recent News:
+{!$Input:Company_Overview}
+
+Competitive Positioning and Market Landscape:
+{!$Input:Positioning_and_Landscape}
+
+Company Strategic Priorities from Research:
+{!$Input:Strategic_Priorities}
+
+Technology Stack Insights and Partnership Details:
+{!$Input:Tech_Insights}
+
+###
+</content>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_2</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL 
+You job is to write a detailed account research plan for {!$Input:Account.Name}. You work for {!$Organization.Name} and you are supporting the Account team with research activities. 
+
+###
+
+### Instructions about how to write the Account Research Report
+
+Please write an Account Research Report with the available information from the ---DATA---  section below. Your report must have the following sections:
+
+Company Overview 
+
+Recent News
+
+Strategic Positioning &amp; Market Landscape
+
+Company Strategic Priorities from Research
+
+Technology Stack Insights and Partnerships
+
+Opportunities for {!$Organization.Name}
+
+
+### Formatting and citations
+
+Your final research report must be with HTML formatting. For any external sources you must cite them with the name of the source at the end of the sentence or bullet point with a hyperlink to the source. 
+
+
+
+---DATA--- 
+### Data about the account in the CRM
+
+Here is the information on the account that we currently have in CRM:
+{!$RecordSnapshot:Account.Snapshot}
+###
+
+
+### Description of the JSON Research Objects Below
+
+Here is a description of the research you will find in the JSON objects below:
+
+JSON Response Object Description
+ 
+The JSON object represents a response generated by an AI model. It contains metadata about the response, token usage statistics, cited sources, and the generated content. Here&apos;s a detailed breakdown of each field in the JSON object:
+ 
+Top-Level Keys
+id
+Type: String
+Description: A globally unique identifier for this specific response. It serves as a reference for tracking or auditing the response.
+Example: &quot;b2378da9-bf38-4a92-a341-4c2558363e95&quot;
+model
+Type: String
+Description: The name or identifier of the AI model that generated the response. This value specifies the particular version or type of the model used.
+Example: &quot;sonar-pro&quot;
+created
+Type: Integer (Unix Timestamp)
+Description: The time the response was generated, represented as a Unix timestamp (seconds since January 1, 1970).
+Example: 1748462839 (This value corresponds to a specific date and time.)
+usage
+Type: Object
+Description: Contains metrics detailing token usage and the search context size for this specific request-response interaction.
+Fields:
+prompt_tokens:
+Type: Integer
+Description: Number of tokens used in the input prompt provided to the AI.
+Example: 150
+completion_tokens:
+Type: Integer
+Description: Number of tokens used in the AI-generated response (completion).
+Example: 406
+total_tokens:
+Type: Integer
+Description: Total number of tokens used in the interaction (sum of prompt_tokens and completion_tokens).
+Example: 556
+search_context_size:
+Type: String
+Description: Indicates the size or scope of the search context utilized by the model to generate the response.
+Example: &quot;high&quot;
+citations
+Type: Array of Strings
+Description: A list of URLs representing sources or materials cited in the generated response. These provide attribution or additional reference for the information included in the completion.
+Example:
+
+[  
+ &quot;https://www.salesforce.com/news/&quot;,  
+ &quot;https://www.salesforceben.com/category/news/&quot;,  
+ &quot;https://www.salesforce.com/blog/what-does-salesforce-do/&quot;,  
+ &quot;https://investor.salesforce.com/overview/default.aspx&quot;,  
+ &quot;https://www.the-independent.com/topic/salesforce&quot;  
+]  
+ 
+6. object
+Type: String
+Description: Specifies the type of object being returned by the API. In this case, &quot;chat.completion&quot; indicates that the object contains a conversational completion generated by the AI.
+Example: &quot;chat.completion&quot;
+choices
+Type: Array of Objects
+Description: Contains one or more generated completions (responses) from the AI model. Each element in the array is a possible &quot;choice&quot; of response.
+Fields (per object in the array):
+index:
+Type: Integer
+Description: The index or position of the choice in the array. This allows multiple responses to be differentiated if more than one choice is returned.
+Example: 0
+finish_reason:
+Type: String
+Description: Indicates why the response generation process ended. For example, &quot;stop&quot; means the response completed naturally.
+Example: &quot;stop&quot;
+message:
+Type: Object
+Description: Contains the main content of the generated response and metadata about the speaker.
+Fields:
+role:
+Type: String
+Description: The role of the speaker in the conversation. In this case, &quot;assistant&quot; indicates that the response was generated by the AI assistant.
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The text content of the generated response. This is the main body of the message and provides the AI&apos;s answer or explanation.
+Example: &quot;Salesforce is the #1 AI CRM (Customer Relationship Management) platform that helps businesses use artificial intelligence and data to improve their customer connections...&quot;
+delta:
+Type: Object
+Description: Used for streaming responses to provide incremental updates to the generated content. In this example, it is empty, indicating no incremental updates were provided.
+Fields:
+role:
+Type: String
+Description: The role of the speaker for the incremental update (if applicable).
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The incremental content update (empty in this example).
+Example: &quot;&quot;
+
+ 
+Summary Table
+ 
+Structured Data
+: The JSON object is highly structured, making it easy to parse and process.
+Citations: The inclusion of cited sources ensures transparency and credibility.
+Token Usage: Detailed token usage statistics are provided, which are useful for billing or optimization.
+Message Content: The core of the response is in the choices array, specifically in the message.content field.
+
+###
+
+### Detailed Research from External Sources on the Account
+
+Here is all of the research you can use to write your research report
+
+Company Overview and Recent News:
+{!$Input:Company_Overview}
+
+Competitive Positioning and Market Landscape:
+{!$Input:Positioning_and_Landscape}
+
+Company Strategic Priorities from Research:
+{!$Input:Strategic_Priorities}
+
+Technology Stack Insights and Partnership Details:
+{!$Input:Tech_Insights}
+
+###
+</content>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_3</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL 
+You job is to write a detailed account research plan for {!$Input:Account.Name}. You work for {!$Organization.Name} and you are supporting the Account team with research activities. 
+
+###
+
+### Instructions about how to write the Account Research Report
+
+Please write an Account Research Report with the available information from the ---DATA---  section below. Your report must have the following sections:
+
+Company Overview 
+
+Recent News
+
+Strategic Positioning &amp; Market Landscape
+
+Company Strategic Priorities from Research
+
+Technology Stack Insights and Partnerships
+
+Opportunities for {!$Organization.Name}
+
+
+### Formatting and citations
+
+Your final research report must be with HTML formatting. For any external sources you must cite them with the name of the source at the end of the sentence or bullet point with a hyperlink to the source. 
+
+
+
+---DATA--- 
+### Data about the account in the CRM
+
+Here is the information on the account that we currently have in CRM:
+{!$RecordSnapshot:Account.Snapshot}
+###
+
+
+### Description of the JSON Research Objects Below
+
+Here is a description of the research you will find in the JSON objects below:
+
+JSON Response Object Description
+ 
+The JSON object represents a response generated by an AI model. It contains metadata about the response, token usage statistics, cited sources, and the generated content. Here&apos;s a detailed breakdown of each field in the JSON object:
+ 
+Top-Level Keys
+id
+Type: String
+Description: A globally unique identifier for this specific response. It serves as a reference for tracking or auditing the response.
+Example: &quot;b2378da9-bf38-4a92-a341-4c2558363e95&quot;
+model
+Type: String
+Description: The name or identifier of the AI model that generated the response. This value specifies the particular version or type of the model used.
+Example: &quot;sonar-pro&quot;
+created
+Type: Integer (Unix Timestamp)
+Description: The time the response was generated, represented as a Unix timestamp (seconds since January 1, 1970).
+Example: 1748462839 (This value corresponds to a specific date and time.)
+usage
+Type: Object
+Description: Contains metrics detailing token usage and the search context size for this specific request-response interaction.
+Fields:
+prompt_tokens:
+Type: Integer
+Description: Number of tokens used in the input prompt provided to the AI.
+Example: 150
+completion_tokens:
+Type: Integer
+Description: Number of tokens used in the AI-generated response (completion).
+Example: 406
+total_tokens:
+Type: Integer
+Description: Total number of tokens used in the interaction (sum of prompt_tokens and completion_tokens).
+Example: 556
+search_context_size:
+Type: String
+Description: Indicates the size or scope of the search context utilized by the model to generate the response.
+Example: &quot;high&quot;
+citations
+Type: Array of Strings
+Description: A list of URLs representing sources or materials cited in the generated response. These provide attribution or additional reference for the information included in the completion.
+Example:
+
+[  
+ &quot;https://www.salesforce.com/news/&quot;,  
+ &quot;https://www.salesforceben.com/category/news/&quot;,  
+ &quot;https://www.salesforce.com/blog/what-does-salesforce-do/&quot;,  
+ &quot;https://investor.salesforce.com/overview/default.aspx&quot;,  
+ &quot;https://www.the-independent.com/topic/salesforce&quot;  
+]  
+ 
+6. object
+Type: String
+Description: Specifies the type of object being returned by the API. In this case, &quot;chat.completion&quot; indicates that the object contains a conversational completion generated by the AI.
+Example: &quot;chat.completion&quot;
+choices
+Type: Array of Objects
+Description: Contains one or more generated completions (responses) from the AI model. Each element in the array is a possible &quot;choice&quot; of response.
+Fields (per object in the array):
+index:
+Type: Integer
+Description: The index or position of the choice in the array. This allows multiple responses to be differentiated if more than one choice is returned.
+Example: 0
+finish_reason:
+Type: String
+Description: Indicates why the response generation process ended. For example, &quot;stop&quot; means the response completed naturally.
+Example: &quot;stop&quot;
+message:
+Type: Object
+Description: Contains the main content of the generated response and metadata about the speaker.
+Fields:
+role:
+Type: String
+Description: The role of the speaker in the conversation. In this case, &quot;assistant&quot; indicates that the response was generated by the AI assistant.
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The text content of the generated response. This is the main body of the message and provides the AI&apos;s answer or explanation.
+Example: &quot;Salesforce is the #1 AI CRM (Customer Relationship Management) platform that helps businesses use artificial intelligence and data to improve their customer connections...&quot;
+delta:
+Type: Object
+Description: Used for streaming responses to provide incremental updates to the generated content. In this example, it is empty, indicating no incremental updates were provided.
+Fields:
+role:
+Type: String
+Description: The role of the speaker for the incremental update (if applicable).
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The incremental content update (empty in this example).
+Example: &quot;&quot;
+
+ 
+Summary Table
+ 
+Structured Data
+: The JSON object is highly structured, making it easy to parse and process.
+Citations: The inclusion of cited sources ensures transparency and credibility.
+Token Usage: Detailed token usage statistics are provided, which are useful for billing or optimization.
+Message Content: The core of the response is in the choices array, specifically in the message.content field.
+
+###
+
+### Detailed Research from External Sources on the Account
+
+Here is all of the research you can use to write your research report
+
+Company Overview and Recent News:
+{!$Input:Company_Overview}
+
+Competitive Positioning and Market Landscape:
+{!$Input:Positioning_and_Landscape}
+
+Company Strategic Priorities from Research:
+{!$Input:Strategic_Priorities}
+
+Technology Stack Insights and Partnership Details:
+{!$Input:Tech_Insights}
+
+###
+</content>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultBedrockAnthropicClaude37Sonnet</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_4</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL 
+You job is to write a detailed account research plan for {!$Input:Account.Name}. You work for {!$Organization.Name} and you are supporting the Account team with research activities. 
+
+###
+
+### Instructions about how to write the Account Research Report
+
+Please write an Account Research Report with the available information from the ---DATA---  section below. Your report must have the following sections:
+
+Company Overview 
+
+Recent News
+
+Strategic Positioning &amp; Market Landscape
+
+Company Strategic Priorities from Research
+
+Technology Stack Insights and Partnerships
+
+Opportunities for {!$Organization.Name}
+
+
+### Formatting and citations
+
+Your final research report must be with HTML formatting. For any external sources you must cite them with the name of the source at the end of the sentence or bullet point with a hyperlink to the source. 
+
+
+
+---DATA--- 
+### Data about the account in the CRM
+
+Here is the information on the account that we currently have in CRM:
+{!$RecordSnapshot:Account.Snapshot}
+###
+
+
+### Description of the JSON Research Objects Below
+
+Here is a description of the research you will find in the JSON objects below:
+
+JSON Response Object Description
+ 
+The JSON object represents a response generated by an AI model. It contains metadata about the response, token usage statistics, cited sources, and the generated content. Here&apos;s a detailed breakdown of each field in the JSON object:
+ 
+Top-Level Keys
+id
+Type: String
+Description: A globally unique identifier for this specific response. It serves as a reference for tracking or auditing the response.
+Example: &quot;b2378da9-bf38-4a92-a341-4c2558363e95&quot;
+model
+Type: String
+Description: The name or identifier of the AI model that generated the response. This value specifies the particular version or type of the model used.
+Example: &quot;sonar-pro&quot;
+created
+Type: Integer (Unix Timestamp)
+Description: The time the response was generated, represented as a Unix timestamp (seconds since January 1, 1970).
+Example: 1748462839 (This value corresponds to a specific date and time.)
+usage
+Type: Object
+Description: Contains metrics detailing token usage and the search context size for this specific request-response interaction.
+Fields:
+prompt_tokens:
+Type: Integer
+Description: Number of tokens used in the input prompt provided to the AI.
+Example: 150
+completion_tokens:
+Type: Integer
+Description: Number of tokens used in the AI-generated response (completion).
+Example: 406
+total_tokens:
+Type: Integer
+Description: Total number of tokens used in the interaction (sum of prompt_tokens and completion_tokens).
+Example: 556
+search_context_size:
+Type: String
+Description: Indicates the size or scope of the search context utilized by the model to generate the response.
+Example: &quot;high&quot;
+citations
+Type: Array of Strings
+Description: A list of URLs representing sources or materials cited in the generated response. These provide attribution or additional reference for the information included in the completion.
+Example:
+
+[  
+ &quot;https://www.salesforce.com/news/&quot;,  
+ &quot;https://www.salesforceben.com/category/news/&quot;,  
+ &quot;https://www.salesforce.com/blog/what-does-salesforce-do/&quot;,  
+ &quot;https://investor.salesforce.com/overview/default.aspx&quot;,  
+ &quot;https://www.the-independent.com/topic/salesforce&quot;  
+]  
+ 
+6. object
+Type: String
+Description: Specifies the type of object being returned by the API. In this case, &quot;chat.completion&quot; indicates that the object contains a conversational completion generated by the AI.
+Example: &quot;chat.completion&quot;
+choices
+Type: Array of Objects
+Description: Contains one or more generated completions (responses) from the AI model. Each element in the array is a possible &quot;choice&quot; of response.
+Fields (per object in the array):
+index:
+Type: Integer
+Description: The index or position of the choice in the array. This allows multiple responses to be differentiated if more than one choice is returned.
+Example: 0
+finish_reason:
+Type: String
+Description: Indicates why the response generation process ended. For example, &quot;stop&quot; means the response completed naturally.
+Example: &quot;stop&quot;
+message:
+Type: Object
+Description: Contains the main content of the generated response and metadata about the speaker.
+Fields:
+role:
+Type: String
+Description: The role of the speaker in the conversation. In this case, &quot;assistant&quot; indicates that the response was generated by the AI assistant.
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The text content of the generated response. This is the main body of the message and provides the AI&apos;s answer or explanation.
+Example: &quot;Salesforce is the #1 AI CRM (Customer Relationship Management) platform that helps businesses use artificial intelligence and data to improve their customer connections...&quot;
+delta:
+Type: Object
+Description: Used for streaming responses to provide incremental updates to the generated content. In this example, it is empty, indicating no incremental updates were provided.
+Fields:
+role:
+Type: String
+Description: The role of the speaker for the incremental update (if applicable).
+Example: &quot;assistant&quot;
+content:
+Type: String
+Description: The incremental content update (empty in this example).
+Example: &quot;&quot;
+
+ 
+Summary Table
+ 
+Structured Data
+: The JSON object is highly structured, making it easy to parse and process.
+Citations: The inclusion of cited sources ensures transparency and credibility.
+Token Usage: Detailed token usage statistics are provided, which are useful for billing or optimization.
+Message Content: The core of the response is in the choices array, specifically in the message.content field.
+
+###
+
+### Detailed Research from External Sources on the Account
+
+Here is all of the research you can use to write your research report
+
+Company Overview and Recent News:
+{!$Input:Company_Overview}
+
+Competitive Positioning and Market Landscape:
+{!$Input:Positioning_and_Landscape}
+
+Company Strategic Priorities from Research:
+{!$Input:Strategic_Priorities}
+
+Technology Stack Insights and Partnership Details:
+{!$Input:Tech_Insights}
+
+###
+</content>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_5</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL  
+You are an expert research analyst at {!$Organization.Name}.  
+Write a **detailed Account Research Report** for **{!$Input:Account.Name}** that equips everyone from quota-carrying AEs to senior executives with the context they need for both long-term **Account Strategy** and near-term **Opportunity Prep**.
+
+---
+
+## 1 Content requirements  
+Your report **must** contain the following sections **in this order**.  
+Follow the guidance for length, style, and structure.
+
+1. **Company Overview**  
+   * *Length:* 2–3 narrative paragraphs (≈250 – 350 words).  
+   * *Include:* headquarters, founding year, core products, recent financials, standout differentiators, and “one-liner” mission.  
+2. **Recent News**  
+   * *Form:* bullet list (•) of the 5–8 most material events ≤ 12 months old.  
+   * *Each bullet:* 1 sentence summary + inline citation.  
+3. **Strategic Positioning &amp; Market Landscape**  
+   * *Paragraph* introducing overall position → numbered or bulleted sub-points covering market share, key competitors, and major trends.  
+4. **Company Strategic Priorities**  
+   * 3–5 numbered priorities. Start each with a bold verb (e.g., **Expand**, **Monetize**, **Streamline**).  
+5. **Technology Stack Insights and Partnerships**  
+   * • bullets are fine; call out core platform components, AI/agentic capabilities, data stack, and at least 3 strategic tech alliances.  
+6. **Opportunities for {!$Organization.Name}**  
+   * 3–7 bullets written from **{!$Organization.Name}’s** perspective (what we could sell / how we can add value).  
+
+---
+
+## 2 Reusable summary table  
+Insert **exactly one** HTML table **immediately after the Company Overview section**.  
+Populate it with research data; if a datapoint is unknown, leave the cell blank.
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| FY-25 Revenue |  |  |
+| CRM Market Share |  |  |
+| YoY Revenue Growth |  |  |
+| AI / Data-Cloud ARR |  |  |
+| HQ Location |  |  |
+| Key Competitor #1 |  |  |
+
+---
+
+## 3 Formatting rules  
+
+* Output **pure HTML only** (no leading ```html fences, no trailing ``` fences).  
+* Headings: `&lt;h2&gt;` for section titles, `&lt;h3&gt;` optional for sub-heads.  
+* Regular paragraphs: `&lt;p&gt; … &lt;/p&gt;`  
+* Bullets: `&lt;ul&gt;&lt;li&gt; … &lt;/li&gt;&lt;/ul&gt;`  
+* Table as shown above; keep minimal inline CSS.  
+* **Citations:** the visible text = the publication / site name; wrap it in an `&lt;a&gt;` tag that hyperlinks to the URL **immediately at the end of the sentence or bullet**. Example:  
+  `… posted record revenue &lt;a href=&quot;https://investor.salesforce.com&quot;&gt;Salesforce Investor Relations&lt;/a&gt;.`  
+* If a required research section has **no data**, still include the header followed by:  
+  `&lt;p&gt;&lt;em&gt;No research found for this section.&lt;/em&gt;&lt;/p&gt;`
+
+---
+
+## 4 Source material  
+
+1. **CRM Data Snapshot** – in `{!$RecordSnapshot:Account.Snapshot}`  
+2. **External Research JSON objects**  
+   * Company Overview &amp; Recent News → `{!$Input:Company_Overview}`  
+   * Competitive Positioning &amp; Market Landscape → `{!$Input:Positioning_and_Landscape}`  
+   * Company Strategic Priorities → `{!$Input:Strategic_Priorities}`  
+   * Technology Insights &amp; Partnerships → `{!$Input:Tech_Insights}`  
+
+You may assume each JSON object follows the schema described below (`choices[0].message.content` contains Markdown with headings and citations).
+
+---
+
+## 5 Extraction &amp; synthesis guidelines  
+
+* Parse the **`message.content`** field of each JSON object to mine facts.  
+* De-duplicate overlapping items across sources; prefer the most recent data.  
+* Trim or rewrite raw content so it reads cohesively; avoid first-person references (“I”, “we”) unless in the Opportunities section.  
+* Convert any Markdown lists or headings into the HTML structures defined above.  
+* Ensure every quantitative statement (market share %, revenue, growth) has an inline citation.  
+* Stay within the general GPT-4o context window; token limits are not a concern.
+
+---
+
+## 6 Output  
+
+Return the **complete HTML body** of the report—nothing else.
+
+</content>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_6</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL  
+You are an expert research analyst at {!$Organization.Name}.  
+Write a **detailed Account Research Report** for **{!$Input:Account.Name}** that equips everyone from quota-carrying AEs to senior executives with the context they need for both long-term **Account Strategy** and near-term **Opportunity Prep**.
+
+---
+
+## 1 Content requirements  
+Your report **must** contain the following sections **in this order**.  
+Follow the guidance for length, style, and structure.
+
+1. **Company Overview**  
+   * *Length:* 2–3 narrative paragraphs (≈250 – 350 words).  
+   * *Include:* headquarters, founding year, core products, recent financials, standout differentiators, and “one-liner” mission.  
+2. **Recent News**  
+   * *Form:* bullet list (•) of the 5–10 most material events ≤ 12 months old.  
+   * *Each bullet:* 1 sentence summary + inline citation.  
+3. **Strategic Positioning &amp; Market Landscape**  
+   * *Paragraph* introducing overall position → numbered or bulleted sub-points covering market share, key competitors, and major trends.  
+   * *Paragraph* with analysis of company competitive positioning → numbered or bulleted sub-points covering the future trends and what this means for the company.
+4. **Company Strategic Priorities**  
+   * 5–10 numbered priorities that the researched account might have from the research. Start each with a bold verb (e.g., **Expand**, **Monetize**, **Streamline**). With each of these 5-10 numbered priorities include a second sentence with your evidence (e.g., **Evidence:** &lt;the bit of information for why you believe that priority is a priority for the company&gt;)
+5. **Technology Stack Insights and Partnerships**  
+   * • 2–3 narrative paragraphs (≈250 – 350 words) with bullets are fine; call out core platform components, AI/agentic capabilities, data stack, and at least 3 strategic tech alliances.  
+6. **Opportunities for {!$Organization.Name}**  
+   * 3–7 bullets written from **{!$Organization.Name}’s** perspective (what we could sell / how we can add value).  
+
+---
+
+## 2 Reusable summary table  
+Insert **exactly one** HTML table **immediately after the Company Overview section**.  
+Populate it with research data; if a datapoint is unknown, leave the cell blank.
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| FY-25 Revenue |  |  |
+| CRM Market Share |  |  |
+| YoY Revenue Growth |  |  |
+| AI / Data-Cloud ARR |  |  |
+| HQ Location |  |  |
+| Key Competitor #1 |  |  |
+
+---
+
+## 3 Formatting rules  
+
+* Output **pure HTML only** (no leading ```html fences, no trailing ``` fences).  
+* Headings: `&lt;h2&gt;` for section titles, `&lt;h3&gt;` optional for sub-heads.  
+* Regular paragraphs: `&lt;p&gt; … &lt;/p&gt;`  
+* Bullets: `&lt;ul&gt;&lt;li&gt; … &lt;/li&gt;&lt;/ul&gt;`  
+* Table as shown above; keep minimal inline CSS.  
+* **Citations:** the visible text = the publication / site name; wrap it in an `&lt;a&gt;` tag that hyperlinks to the URL **immediately at the end of the sentence or bullet**. Example:  
+  `… posted record revenue &lt;a href=&quot;https://investor.salesforce.com&quot;&gt;Salesforce Investor Relations&lt;/a&gt;.`  
+* If a required research section has **no data**, still include the header followed by:  
+  `&lt;p&gt;&lt;em&gt;No research found for this section.&lt;/em&gt;&lt;/p&gt;`
+
+---
+
+## 4 Source material  
+
+1. **CRM Data Snapshot** – in `{!$RecordSnapshot:Account.Snapshot}`  
+2. **External Research JSON objects**  
+   * Company Overview &amp; Recent News → `{!$Input:Company_Overview}`  
+   * Competitive Positioning &amp; Market Landscape → `{!$Input:Positioning_and_Landscape}`  
+   * Company Strategic Priorities → `{!$Input:Strategic_Priorities}`  
+   * Technology Insights &amp; Partnerships → `{!$Input:Tech_Insights}`  
+
+You may assume each JSON object follows the schema described below (`choices[0].message.content` contains Markdown with headings and citations).
+
+---
+
+## 5 Extraction &amp; synthesis guidelines  
+
+* Parse the **`message.content`** field of each JSON object to mine facts.  
+* De-duplicate overlapping items across sources; prefer the most recent data.  
+* Trim or rewrite raw content so it reads cohesively; avoid first-person references (“I”, “we”) unless in the Opportunities section.  
+* Convert any Markdown lists or headings into the HTML structures defined above.  
+* Ensure every quantitative statement (market share %, revenue, growth) has an inline citation.  
+* Stay within the general GPT-4o context window; token limits are not a concern.
+
+---
+
+## 6 Output  
+
+Return the **complete HTML body** of the report—nothing else.
+
+</content>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_8</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL  
+You are an expert research analyst at {!$Organization.Name}.  
+Write a **detailed Account Research Report** for **{!$Input:Account.Name}** that equips everyone from quota-carrying AEs to senior executives with the context they need for both long-term **Account Strategy** and near-term **Opportunity Prep**.
+
+---
+
+## 1 Content requirements  
+Your report **must** contain the following sections **in this order**.  
+Follow the guidance for length, style, and structure.
+
+1. **Company Overview**  
+   * *Length:* 2–3 narrative paragraphs (≈250 – 350 words).  
+   * *Include:* headquarters, founding year, core products, recent financials, standout differentiators, and “one-liner” mission.  
+2. **Recent News**  
+   * *Form:* bullet list (•) of the 5–10 most material events ≤ 12 months old.  
+   * *Each bullet:* 1 sentence summary + inline citation.  
+3. **Strategic Positioning &amp; Market Landscape**  
+   * *Paragraph* introducing overall position → numbered or bulleted sub-points covering market share, key competitors, and major trends.  
+4. **Company Strategic Priorities**  
+   * 5–10 numbered priorities that the researched account might have from the research. Start each with a bold verb (e.g., **Expand**, **Monetize**, **Streamline**).  
+5. **Technology Stack Insights and Partnerships**  
+   * • 2–3 narrative paragraphs (≈250 – 350 words) with bullets are fine; call out core platform components, AI/agentic capabilities, data stack, and at least 3 strategic tech alliances.  
+6. **Opportunities for {!$Organization.Name}**  
+   * 3–7 bullets written from **{!$Organization.Name}’s** perspective (what we could sell / how we can add value).  
+
+---
+
+## 2 Reusable summary table  
+Insert **exactly one** HTML table **immediately after the Company Overview section**.  
+Populate it with research data; if a datapoint is unknown, leave the cell blank.
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| FY-25 Revenue |  |  |
+| CRM Market Share |  |  |
+| YoY Revenue Growth |  |  |
+| AI / Data-Cloud ARR |  |  |
+| HQ Location |  |  |
+| Key Competitor #1 |  |  |
+
+---
+
+## 3 Formatting rules  
+
+* Output **pure HTML only** (no leading ```html fences, no trailing ``` fences).  
+* Headings: `&lt;h2&gt;` for section titles, `&lt;h3&gt;` optional for sub-heads.  
+* Regular paragraphs: `&lt;p&gt; … &lt;/p&gt;`  
+* Bullets: `&lt;ul&gt;&lt;li&gt; … &lt;/li&gt;&lt;/ul&gt;`  
+* Table as shown above; keep minimal inline CSS.  
+* **Citations:** the visible text = the publication / site name; wrap it in an `&lt;a&gt;` tag that hyperlinks to the URL **immediately at the end of the sentence or bullet**. Example:  
+  `… posted record revenue &lt;a href=&quot;https://investor.salesforce.com&quot;&gt;Salesforce Investor Relations&lt;/a&gt;.`  
+* If a required research section has **no data**, still include the header followed by:  
+  `&lt;p&gt;&lt;em&gt;No research found for this section.&lt;/em&gt;&lt;/p&gt;`
+
+---
+
+## 4 Source material  
+
+1. **CRM Data Snapshot** – in `{!$RecordSnapshot:Account.Snapshot}`  
+2. **External Research JSON objects**  
+   * Company Overview &amp; Recent News → `{!$Input:Company_Overview}`  
+   * Competitive Positioning &amp; Market Landscape → `{!$Input:Positioning_and_Landscape}`  
+   * Company Strategic Priorities → `{!$Input:Strategic_Priorities}`  
+   * Technology Insights &amp; Partnerships → `{!$Input:Tech_Insights}`  
+
+You may assume each JSON object follows the schema described below (`choices[0].message.content` contains Markdown with headings and citations).
+
+---
+
+## 5 Extraction &amp; synthesis guidelines  
+
+* Parse the **`message.content`** field of each JSON object to mine facts.  
+* De-duplicate overlapping items across sources; prefer the most recent data.  
+* Trim or rewrite raw content so it reads cohesively; avoid first-person references (“I”, “we”) unless in the Opportunities section.  
+* Convert any Markdown lists or headings into the HTML structures defined above.  
+* Ensure every quantitative statement (market share %, revenue, growth) has an inline citation.  
+* Stay within the general GPT-4o context window; token limits are not a concern.
+
+---
+
+## 6 Output  
+
+Return the **complete HTML body** of the report—nothing else.
+
+</content>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_7</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>### MAIN GOAL  
+You are an expert research analyst at {!$Organization.Name}.  
+Write a **detailed Account Research Report** for **{!$Input:Account.Name}** that equips everyone from quota-carrying AEs to senior executives with the context they need for both long-term **Account Strategy** and near-term **Opportunity Prep**.
+
+---
+
+## 1 Content requirements  
+Your report **must** contain the following sections **in this order**.  
+Follow the guidance for length, style, and structure.
+
+1. **Company Overview**  
+   * *Length:* 2–3 narrative paragraphs (≈250 – 350 words).  
+   * *Include:* headquarters, founding year, core products, recent financials, standout differentiators, and “one-liner” mission.  
+2. **Recent News**  
+   * *Form:* bullet list (•) of the 5–10 most material events ≤ 12 months old.  
+   * *Each bullet:* 1 sentence summary + inline citation.  
+3. **Strategic Positioning &amp; Market Landscape**  
+   * *Paragraph* introducing overall position → numbered or bulleted sub-points covering market share, key competitors, and major trends.  
+   * *Paragraph* with analysis of company competitive positioning → numbered or bulleted sub-points covering the future trends and what this means for the company.
+4. **Company Strategic Priorities**  
+   * 5–10 numbered priorities that the researched account might have from the research. Start each with a bold verb (e.g., **Expand**, **Monetize**, **Streamline**). With each of these 5-10 numbered priorities include a second sentence with your evidence (e.g., **Evidence:** &lt;the bit of information for why you believe that priority is a priority for the company&gt;)
+5. **Technology Stack Insights and Partnerships**  
+   * • 2–3 narrative paragraphs (≈250 – 350 words) with bullets are fine; call out core platform components, AI/agentic capabilities, data stack, and at least 3 strategic tech alliances.  
+6. **Opportunities for {!$Organization.Name}**  
+   * 3–7 bullets written from **{!$Organization.Name}’s** perspective (what we could sell / how we can add value).  
+
+---
+
+## 2 Reusable summary table  
+Insert **exactly one** HTML table **immediately after the Company Overview section**.  
+Populate it with research data; if a datapoint is unknown, leave the cell blank.
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| FY-25 Revenue |  |  |
+| CRM Market Share |  |  |
+| YoY Revenue Growth |  |  |
+| AI / Data-Cloud ARR |  |  |
+| HQ Location |  |  |
+| Key Competitor #1 |  |  |
+
+---
+
+## 3 Formatting rules  
+
+* Output **pure HTML only** (no leading ```html fences, no trailing ``` fences).  
+* Headings: `&lt;h2&gt;` for section titles, `&lt;h3&gt;` optional for sub-heads.  
+* Regular paragraphs: `&lt;p&gt; … &lt;/p&gt;`  
+* Bullets: `&lt;ul&gt;&lt;li&gt; … &lt;/li&gt;&lt;/ul&gt;`  
+* Table as shown above; keep minimal inline CSS.  
+* **Citations:** the visible text = the publication / site name; wrap it in an `&lt;a&gt;` tag that hyperlinks to the URL **immediately at the end of the sentence or bullet**. Example:  
+  `… posted record revenue &lt;a href=&quot;https://investor.salesforce.com&quot;&gt;Salesforce Investor Relations&lt;/a&gt;.`  
+* If a required research section has **no data**, still include the header followed by:  
+  `&lt;p&gt;&lt;em&gt;No research found for this section.&lt;/em&gt;&lt;/p&gt;`
+
+---
+
+## 4 Source material  
+
+1. **CRM Data Snapshot** – in `{!$RecordSnapshot:Account.Snapshot}`  
+2. **External Research JSON objects**  
+   * Company Overview &amp; Recent News → `{!$Input:Company_Overview}`  
+   * Competitive Positioning &amp; Market Landscape → `{!$Input:Positioning_and_Landscape}`  
+   * Company Strategic Priorities → `{!$Input:Strategic_Priorities}`  
+   * Technology Insights &amp; Partnerships → `{!$Input:Tech_Insights}`  
+
+You may assume each JSON object follows the schema described below (`choices[0].message.content` contains Markdown with headings and citations).
+
+---
+
+## 5 Extraction &amp; synthesis guidelines  
+
+* Parse the **`message.content`** field of each JSON object to mine facts.  
+* De-duplicate overlapping items across sources; prefer the most recent data.  
+* Trim or rewrite raw content so it reads cohesively; avoid first-person references (“I”, “we”) unless in the Opportunities section.  
+* Convert any Markdown lists or headings into the HTML structures defined above.  
+* Ensure every quantitative statement (market share %, revenue, growth) has an inline citation.  
+* Stay within the general GPT-4o context window; token limits are not a concern.
+
+---
+
+## 6 Output  
+
+Return the **complete HTML body** of the report—nothing else.
+
+</content>
+        <inputs>
+            <apiName>Strategic_Priorities</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Strategic Priorities</masterLabel>
+            <referenceName>Input:Strategic_Priorities</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Positioning_and_Landscape</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Positioning and Landscape</masterLabel>
+            <referenceName>Input:Positioning_and_Landscape</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Tech_Insights</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Tech Insights</masterLabel>
+            <referenceName>Input:Tech_Insights</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Company_Overview</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Company Overview</masterLabel>
+            <referenceName>Input:Company_Overview</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT41</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_9</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

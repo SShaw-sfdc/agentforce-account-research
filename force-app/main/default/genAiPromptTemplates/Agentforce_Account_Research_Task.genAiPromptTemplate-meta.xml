@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_2</activeVersionIdentifier>
+    <description>This prompt template is used to answer questions about Account Research Reports or perform tasks related to getting information from the Account Research Reports or Accounts.</description>
+    <developerName>Agentforce_Account_Research_Task</developerName>
+    <masterLabel>Agentforce Account Research Task</masterLabel>
+    <templateVersions>
+        <content>&lt;Overall Instruction&gt;
+Your job is to address the question or task below using the data available to you. The questions or tasks will pertain to the Account Research Report that is available to you. You also have access to the CRM data snapshot for the account the user is asking a question or asking for a task about. 
+
+In your answer, if there is data that has reference links, please include these as clickable links in your answer. 
+&lt;/Overall Instruction&gt;
+
+&lt;Question or Task&gt;
+{!$Input:Question_or_Task}
+&lt;/Question or Task&gt;
+
+&lt;Account Research Report&gt;
+{!$Input:Account_Research_Report.Report__c}
+&lt;/Account Research Report&gt;
+
+&lt;Here is contextual information about the Account Research Report Object and Fields&gt;
+	•	Account__c – Master-Detail to Account; links each research record to its parent account
+	•	Account_Opportunities_Summary__c – rich-text area containing the auto-generated opportunities section summary
+	•	Account_Overview_Summary__c – rich-text area storing the condensed company-overview paragraph
+	•	Name – text title of the report (Research reports follow a schema (Research Report for &lt;Account Name&gt; on &lt;DateTime&gt;). Here is an example: Research Report for Salesforce on 7/10/2025, 12:48 PM.)
+	•	Comparison_to_Previous_Report__c – rich-text area that highlights what changed since the last run
+	•	CreatedById – lookup to User who created the record (standard audit)
+	•	CurrencyIsoCode – picklist used only in multi-currency orgs (standard field)
+	•	Is_Most_Recent__c – checkbox; TRUE on the latest report for an account, cleared on older ones
+	•	LastModifiedById – lookup to User who last edited the record (standard audit)
+	•	Recent_News_Summary__c – rich-text area holding the summarized recent-news bullets
+	•	Report__c – large rich-text area (131 kB) storing the full HTML research report
+	•	Report_Summary__c – rich-text area with the executive-summary section
+	•	Run_Date_Time__c – formula (Date/Time) = CreatedDate; shows when the report was generated
+	•	Strategic_Positioning_Summary__c – rich-text area with the positioning &amp; market-landscape summary
+	•	Strategic_Priorities_Summary__c – rich-text area summarizing company strategic priorities
+	•	Tech_Stack_and_Partnerships_Summary__c – rich-text area summarizing technology stack and partnerships
+&lt;/Here is contextual information about the Account Research Report Object and Fields&gt;
+
+&lt;Account Data&gt;
+{!$RecordSnapshot:Account.Snapshot}
+&lt;/Account Data&gt;
+
+</content>
+        <inputs>
+            <apiName>Question_or_Task</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Question or Task</masterLabel>
+            <referenceName>Input:Question_or_Task</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account_Research_Report</apiName>
+            <definition>SOBJECT://Account_Research_Report__c</definition>
+            <masterLabel>Account Research Report</masterLabel>
+            <referenceName>Input:Account_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_2</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>&lt;Overall Instruction&gt;
+Your job is to address the question or task below using the data available to you. The questions or tasks will pertain to the Account Research Report that is available to you. You also have access to the CRM data snapshot for the account the user is asking a question or asking for a task about. 
+
+In your answer, if there is data that has reference links, please include these as clickable links in your answer. 
+&lt;/Overall Instruction&gt;
+
+&lt;Question or Task&gt;
+{!$Input:Question_or_Task}
+&lt;/Question or Task&gt;
+
+&lt;Account Research Report&gt;
+{!$Input:Account_Research_Report.Report__c}
+&lt;/Account Research Report&gt;
+
+&lt;Here is contextual information about the Account Research Report Object and Fields&gt;
+	•	Account__c – Master-Detail to Account; links each research record to its parent account
+	•	Account_Opportunities_Summary__c – rich-text area containing the auto-generated opportunities section summary
+	•	Account_Overview_Summary__c – rich-text area storing the condensed company-overview paragraph
+	•	Name – text title of the report (Research reports follow a schema (Research Report for &lt;Account Name&gt; on &lt;DateTime&gt;). Here is an example: Research Report for Salesforce on 7/10/2025, 12:48 PM.)
+	•	Comparison_to_Previous_Report__c – rich-text area that highlights what changed since the last run
+	•	CreatedById – lookup to User who created the record (standard audit)
+	•	CurrencyIsoCode – picklist used only in multi-currency orgs (standard field)
+	•	Is_Most_Recent__c – checkbox; TRUE on the latest report for an account, cleared on older ones
+	•	LastModifiedById – lookup to User who last edited the record (standard audit)
+	•	Recent_News_Summary__c – rich-text area holding the summarized recent-news bullets
+	•	Report__c – large rich-text area (131 kB) storing the full HTML research report
+	•	Report_Summary__c – rich-text area with the executive-summary section
+	•	Run_Date_Time__c – formula (Date/Time) = CreatedDate; shows when the report was generated
+	•	Strategic_Positioning_Summary__c – rich-text area with the positioning &amp; market-landscape summary
+	•	Strategic_Priorities_Summary__c – rich-text area summarizing company strategic priorities
+	•	Tech_Stack_and_Partnerships_Summary__c – rich-text area summarizing technology stack and partnerships
+&lt;/Here is contextual information about the Account Research Report Object and Fields&gt;
+
+&lt;Account Data&gt;
+{!$RecordSnapshot:Account.Snapshot}
+&lt;/Account Data&gt;
+
+</content>
+        <inputs>
+            <apiName>Question_or_Task</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Question or Task</masterLabel>
+            <referenceName>Input:Question_or_Task</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account_Research_Report</apiName>
+            <definition>SOBJECT://Account_Research_Report__c</definition>
+            <masterLabel>Account Research Report</masterLabel>
+            <referenceName>Input:Account_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Account.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Account</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

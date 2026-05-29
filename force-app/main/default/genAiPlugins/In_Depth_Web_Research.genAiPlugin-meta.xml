@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Use this topic for exhaustive external web research and synthesis.</description>
+    <developerName>In_Depth_Web_Research</developerName>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__WebSearch</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Perform 5 distinct web queries: overview, recent updates, challenges, technical details, and related entities/competitors. Synthesize findings with explicit source links.</description>
+        <developerName>instruction_0</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>In Depth Web Research</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>You are permitted to run multiple web searches and synthesize results with citations. Do not fabricate facts.</scope>
+</GenAiPlugin>

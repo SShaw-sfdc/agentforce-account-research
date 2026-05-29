@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_6</activeVersionIdentifier>
+    <description>This prompt template summarizes the generated report.</description>
+    <developerName>Account_Intelligence_Research_Summarizer</developerName>
+    <masterLabel>Account Intelligence Research Summarizer</masterLabel>
+    <templateVersions>
+        <content>###
+Overall Goal: Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+###
+Goal Details: I only need you to focus on summarizing the content of the report or the specific report section. If your summary uses a piece of hyperlinked information or a citation, you must preserve that clickable hyperlink/citation in your summary. 
+
+###
+Formatting Details: The formatting of the summary should be rich text formatted. Do not include the section header or the title of what you summarized. I just want the summary bullet points. Please write the summary in HTML formatting. Do not start your HTML with this (```html) or end with triple quotes (```). 
+
+###
+Content to Summarize: 
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_7</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+The formatting of the summary should be rich text formatted. 
+
+
+Content to Summarize: 
+
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_1</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+The formatting of the summary should be rich text formatted. 
+
+
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Draft</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_2</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+The formatting of the summary should be rich text formatted. Please write the summary in HTML formatting. 
+
+
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_3</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Overall Goal: Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+Goal Details: I only need you to focus on summarizing the content of the report or the specific report section. If your summary uses a piece of hyperlinked information or a citation, you must preserve that clickable hyperlink/citation in your summary. 
+
+Formatting Details: The formatting of the summary should be rich text formatted. Please write the summary in HTML formatting. Do not start your HTML with this (```html) or end with triple quotes (```). 
+
+
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_4</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>###
+Overall Goal: Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+###
+Goal Details: I only need you to focus on summarizing the content of the report or the specific report section. If your summary uses a piece of hyperlinked information or a citation, you must preserve that clickable hyperlink/citation in your summary. 
+
+###
+Formatting Details: The formatting of the summary should be rich text formatted. Please write the summary in HTML formatting. Do not start your HTML with this (```html) or end with triple quotes (```). 
+
+###
+Content to Summarize: 
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_5</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>###
+Overall Goal: Please summarize the following report into at most 5 bullet points. If you are directed to summarize a specific section please only summarize that specific section. 
+
+###
+Goal Details: I only need you to focus on summarizing the content of the report or the specific report section. If your summary uses a piece of hyperlinked information or a citation, you must preserve that clickable hyperlink/citation in your summary. 
+
+###
+Formatting Details: The formatting of the summary should be rich text formatted. Do not include the section header or the title of what you summarized. I just want the summary bullet points. Please write the summary in HTML formatting. Do not start your HTML with this (```html) or end with triple quotes (```). 
+
+###
+Content to Summarize: 
+{!$Input:Content_to_Summarize}
+
+</content>
+        <inputs>
+            <apiName>Content_to_Summarize</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Content to Summarize</masterLabel>
+            <referenceName>Input:Content_to_Summarize</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_6</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

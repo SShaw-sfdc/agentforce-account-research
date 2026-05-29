@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_5</activeVersionIdentifier>
+    <description>This prompt template compares new research reports to old research reports.</description>
+    <developerName>Account_Intelligence_Research_Report_Comparison</developerName>
+    <masterLabel>Account Intelligence Research Report Comparison</masterLabel>
+    <templateVersions>
+        <content>###
+Overall Goal: Please compare the content of the two research reports below and write up to 5 bullet points about the key differences between the Previous Research Report and the New Research Report. 
+
+###
+Goal Details: I need you to compare the content of both of the previous research reports and the new research reports. I need you to note the most vital information that a sales leader might need to know about the changes from the research reports. These research reports are just a snapshot in time and observing and noting differences in the reports is necessary to make sure we are identifying and capitalizing on business trends. You should evaluate and only note business critical differences in the reports. Because you are only meant to note business critical differences in the report you do not need to generate all 5 bullet points. You simply have 5 as an upper limit. 
+
+If the previous research report section does not contain a research report please state &quot;There are no prior version research reports available to compare.&quot; If there is not a previous research report to compare against just have one sentence in your response stating: &quot;There are no prior version research reports available to compare.&quot; You must only bring back one sentence if this is the case. 
+
+###
+Formatting Details: The formatting of the comparison should be in HTML formatting for rich text fields in Salesforce. Do not include the section header or the title of what you just read. I just want the comparison bullet points. Please write the summary in HTML formatting. Do not start your HTML with this (```html) or end with triple quotes (```)
+
+
+Previous Research Report: 
+{!$Input:Old_Research_Report}
+
+New Research Report: 
+{!$Input:New_Research_Report}
+</content>
+        <inputs>
+            <apiName>Old_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Old Research Report</masterLabel>
+            <referenceName>Input:Old_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>New_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>New Research Report</masterLabel>
+            <referenceName>Input:New_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_5</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Please compare the two research reports below and write 5 bullet points about the key differences between the Old Research Report and the New Research Report. 
+
+Your final answer must be HTML formatted for rich text. 
+
+Old Research Report: 
+{!$Input:Old_Research_Report}
+
+New Research Report: 
+{!$Input:New_Research_Report}
+</content>
+        <inputs>
+            <apiName>Old_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Old Research Report</masterLabel>
+            <referenceName>Input:Old_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>New_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>New Research Report</masterLabel>
+            <referenceName>Input:New_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_1</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Please compare the two research reports below and write 5 bullet points about the key differences between the Old Research Report and the New Research Report. 
+
+If the old research report section does not contain a research report please state &quot;There are no prior version research reports available to compare.&quot;
+
+Your final answer must be HTML formatted for rich text. 
+
+Old Research Report: 
+{!$Input:Old_Research_Report}
+
+New Research Report: 
+{!$Input:New_Research_Report}
+</content>
+        <inputs>
+            <apiName>Old_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Old Research Report</masterLabel>
+            <referenceName>Input:Old_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>New_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>New Research Report</masterLabel>
+            <referenceName>Input:New_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_2</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Please compare the two research reports below and write 5 bullet points about the key differences between the Old Research Report and the New Research Report. 
+
+If the old research report section does not contain a research report please state &quot;There are no prior version research reports available to compare.&quot; If there is not a old research report to compare against just have one sentence in your response stating: &quot;There are no prior version research reports available to compare.&quot; You must only bring back one sentence if this is the case. 
+
+Your final answer must be HTML formatted for rich text. 
+
+Old Research Report: 
+{!$Input:Old_Research_Report}
+
+New Research Report: 
+{!$Input:New_Research_Report}
+</content>
+        <inputs>
+            <apiName>Old_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Old Research Report</masterLabel>
+            <referenceName>Input:Old_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>New_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>New Research Report</masterLabel>
+            <referenceName>Input:New_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_3</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>###
+Overall Goal: Please compare the content of the two research reports below and write up to 5 bullet points about the key differences between the Previous Research Report and the New Research Report. 
+
+###
+Goal Details: I need you to compare the content of both of the previous research reports and the new research reports. I need you to note the most vital information that a sales leader might need to know about the changes from the research reports. These research reports are just a snapshot in time and observing and noting differences in the reports is necessary to make sure we are identifying and capitalizing on business trends. You should evaluate and only note business critical differences in the reports. Because you are only meant to note business critical differences in the report you do not need to generate all 5 bullet points. You simply have 5 as an upper limit. 
+
+If the previous research report section does not contain a research report please state &quot;There are no prior version research reports available to compare.&quot; If there is not a previous research report to compare against just have one sentence in your response stating: &quot;There are no prior version research reports available to compare.&quot; You must only bring back one sentence if this is the case. 
+
+###
+Formatting Details: The formatting of the comparison should be in HTML formatting for rich text fields in Salesforce. Do not include the section header or the title of what you just read. I just want the comparison bullet points. Please write the summary in HTML formatting. Do not start your HTML with this (```html) or end with triple quotes (```)
+
+
+Previous Research Report: 
+{!$Input:Old_Research_Report}
+
+New Research Report: 
+{!$Input:New_Research_Report}
+</content>
+        <inputs>
+            <apiName>Old_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Old Research Report</masterLabel>
+            <referenceName>Input:Old_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>New_Research_Report</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>New Research Report</masterLabel>
+            <referenceName>Input:New_Research_Report</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>yFTyfS1UX4HtDir/0yWM5wCSGzjNA/nxeRkHL31kyPA=_4</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

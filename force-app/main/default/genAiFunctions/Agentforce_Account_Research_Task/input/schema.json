@@ -1,0 +1,21 @@
+{
+  "required" : [ "Question_or_Task", "account_ID" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Question_or_Task" : {
+      "title" : "Question_or_Task",
+      "description" : "This is the user's input question or task they want performed for the given Account Research Report.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "account_ID" : {
+      "title" : "account_ID",
+      "description" : "This is the account ID to be used for the Agentforce Account Research Report Task.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -38,7 +38,7 @@ jobs:
             --wait 10
 
       - name: Run Apex Tests
-        run: sf apex run test --target-org validate-org --wait 10 --result-format human || true
+        run: sf apex run test --target-org validate-org --wait 10 --result-format human
 
       - name: Delete Scratch Org
         if: always()

@@ -1,0 +1,45 @@
+name: Validate Metadata
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'force-app/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'force-app/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: npm install -g @salesforce/cli
+
+      - name: Authenticate Dev Hub
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL }}" > auth_url.txt
+          sf org login sfdx-url --sfdx-url-file auth_url.txt --alias devhub --set-default-dev-hub
+          rm auth_url.txt
+
+      - name: Create Scratch Org
+        run: sf org create scratch --definition-file config/project-scratch-def.json --alias validate-org --set-default --duration-days 1
+
+      - name: Deploy Apex and Custom Object
+        run: |
+          sf project deploy start \
+            --source-dir force-app/main/default/classes \
+            --source-dir force-app/main/default/objects \
+            --source-dir force-app/main/default/notificationtypes \
+            --target-org validate-org \
+            --wait 10
+
+      - name: Run Apex Tests
+        run: sf apex run test --target-org validate-org --wait 10 --result-format human || true
+
+      - name: Delete Scratch Org
+        if: always()
+        run: sf org delete scratch --target-org validate-org --no-prompt

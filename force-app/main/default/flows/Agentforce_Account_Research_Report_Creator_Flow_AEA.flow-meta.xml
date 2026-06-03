@@ -50,122 +50,6 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
-        <name>AEA_Competitive_Positioning</name>
-        <label>AEA_Competitive_Positioning</label>
-        <locationX>176</locationX>
-        <locationY>674</locationY>
-        <actionName>Research_Specialist</actionName>
-        <actionType>generateAiAgentResponse</actionType>
-        <connector>
-            <targetReference>AEA_Strategic_Priorities</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <apexClass>AgentInvAction__AIAgentCompositeDefault</apexClass>
-            <typeName>U__agentResponseApex</typeName>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>userMessage</name>
-            <value>
-                <stringValue>{!prompt_Competitive_Position_Market_Landscape}</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>Research_Specialist</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>response_Competitive_Positioning_Landscape</assignToReference>
-            <name>agentResponse</name>
-        </outputParameters>
-        <versionString>1.1.0</versionString>
-    </actionCalls>
-    <actionCalls>
-        <name>AEA_Overview_and_Recent_News</name>
-        <label>AEA_Overview_and_Recent_News</label>
-        <locationX>176</locationX>
-        <locationY>566</locationY>
-        <actionName>Research_Specialist</actionName>
-        <actionType>generateAiAgentResponse</actionType>
-        <connector>
-            <targetReference>AEA_Competitive_Positioning</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <apexClass>AgentInvAction__AIAgentCompositeDefault</apexClass>
-            <typeName>U__agentResponseApex</typeName>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>userMessage</name>
-            <value>
-                <stringValue>{!prompt_Overview_Recent_News}</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>Research_Specialist</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>response_Overview_Recent_News_JSON</assignToReference>
-            <name>agentResponse</name>
-        </outputParameters>
-        <versionString>1.1.0</versionString>
-    </actionCalls>
-    <actionCalls>
-        <name>AEA_Strategic_Priorities</name>
-        <label>AEA_Strategic_Priorities</label>
-        <locationX>176</locationX>
-        <locationY>782</locationY>
-        <actionName>Research_Specialist</actionName>
-        <actionType>generateAiAgentResponse</actionType>
-        <connector>
-            <targetReference>AEA_Tech_Insights</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <apexClass>AgentInvAction__AIAgentCompositeDefault</apexClass>
-            <typeName>U__agentResponseApex</typeName>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>userMessage</name>
-            <value>
-                <stringValue>{!prompt_Strategic_Priorities_Opportunities}</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>Research_Specialist</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>response_Strategic_Priorities_Opportunities</assignToReference>
-            <name>agentResponse</name>
-        </outputParameters>
-        <versionString>1.1.0</versionString>
-    </actionCalls>
-    <actionCalls>
-        <name>AEA_Tech_Insights</name>
-        <label>AEA_Tech_Insights</label>
-        <locationX>176</locationX>
-        <locationY>890</locationY>
-        <actionName>Research_Specialist</actionName>
-        <actionType>generateAiAgentResponse</actionType>
-        <connector>
-            <targetReference>Account_Intelligence_Research_Report_Generator</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <apexClass>AgentInvAction__AIAgentCompositeDefault</apexClass>
-            <typeName>U__agentResponseApex</typeName>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>userMessage</name>
-            <value>
-                <stringValue>{!prompt_Tech_Insights_Partnerships}</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>Research_Specialist</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>response_Tech_Insights_Partnerships</assignToReference>
-            <name>agentResponse</name>
-        </outputParameters>
-        <versionString>1.1.0</versionString>
-    </actionCalls>
-    <actionCalls>
         <description>This is the comparison of old research reports with new research reports.</description>
         <name>Compare_New_Report_with_Old_Report</name>
         <label>Compare New Report with Old Report</label>
@@ -610,7 +494,7 @@
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AEA_Overview_and_Recent_News</targetReference>
+            <targetReference>Account_Intelligence_Research_Report_Generator</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
